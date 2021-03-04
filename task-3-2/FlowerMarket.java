@@ -28,7 +28,7 @@ public class FlowerMarket {
         bouquet.setRose(rose);
         bouquet.setArchidea(archidea);
         bouquet.setChamomile(chamomile);
-        bouquet.setChamomile(chamomile);
+        bouquet.setLiliya(liliya);
 
         List<Flower> flowers = new ArrayList<>();
         flowers.add(archidea);
