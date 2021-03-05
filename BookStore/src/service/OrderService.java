@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    Order save(Order entity);
+    Order saveOrderAndCreateRequest(Order entity);
 
     List<Order> findAll();
 

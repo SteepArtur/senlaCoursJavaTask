@@ -7,43 +7,41 @@ import service.RequestService;
 import service.impl.BookServiceImpl;
 import service.impl.OrderServiceImpl;
 import service.impl.RequestServiceImpl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.List;
 
-// Controller
-public class ElectronicBookStore {
+public class ApplicationBookStore {
 
     public static void main(String[] args) {
-        // services
+
         BookService bookService = new BookServiceImpl();
         OrderService orderService = new OrderServiceImpl();
         RequestService requestService = new RequestServiceImpl();
 
-//        createOrders(bookService, orderService);
-//        deleteOrder(orderService);
-//        orderSum(orderService);
-//        changeOrderStatus(orderService);
-//        createOrderWithRequest(orderService, requestService);
-          createRequestForBook(requestService);
+        createOrders(bookService, orderService);
+        deleteOrder(orderService);
+        orderSum(orderService);
+        changeOrderStatus(orderService);
+        createOrderWithRequest(orderService);
+        createRequestForBook(requestService);
     }
 
     private static void createRequestForBook(RequestService requestService) {
         System.out.println("Создаём книгу");
-        Book book9 = new Book("NEW BOOK");
-        System.out.println("Книга создана: " + book9);
-       // setBooks(new ArrayList<>(Arrays.asList(book9)));
+        Book book = new Book("NEW BOOK");
+        System.out.println("Книга создана: " + book);
         System.out.println("Создаём запрос на книгу");
-         requestService.create(book9.getName());
+        requestService.create(book.getName());
     }
 
-    private static void createOrderWithRequest(OrderService orderService, RequestService requestService) {
+    private static void createOrderWithRequest(OrderService orderService) {
         Book book = new Book("Go");
         Book book2 = new Book("Python");
         Order order = new Order();
         order.setBooks(new ArrayList<>(Arrays.asList(book, book2)));
-        orderService.save(order);
+        orderService.saveOrderAndCreateRequest(order);
     }
 
     private static void orderSum(OrderService orderService) {
@@ -66,11 +64,11 @@ public class ElectronicBookStore {
 
         Order order1 = new Order();
         order1.setBooks(booksForOrder);
-        orderService.save(order1);
+        orderService.saveOrderAndCreateRequest(order1);
 
         Order order2 = new Order();
         order2.setBooks(booksForOrder);
-        orderService.save(order2);
+        orderService.saveOrderAndCreateRequest(order2);
     }
 
     private static void deleteOrder(OrderService orderService) {
@@ -112,4 +110,3 @@ public class ElectronicBookStore {
         orderService.changeStatusOrderById(3,OrderStatus.DELETE);
     }
 }
-

@@ -18,7 +18,7 @@ public class OrderServiceImpl implements OrderService {
     private final RequestService requestService = new RequestServiceImpl();
 
     @Override
-    public Order save(Order order) {
+    public Order saveOrderAndCreateRequest(Order order) {
         Boolean canCreateOrder = checkOrderBooks(order.getBooks());
         if (!canCreateOrder){
             System.out.println("Can not create order");
@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         System.out.println("Save order: " + order);
-        order.setOrderStatus(OrderStatus.NEW); //новый статус
+        order.setOrderStatus(OrderStatus.NEW);
         return orderDao.save(order);
     }
 
@@ -75,10 +75,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void changeStatusOrderById(Integer id, OrderStatus orderStatus) {
-//        Order order = orderDao.findById(id);
         Order order = findById(id);
         order.setOrderStatus(orderStatus);
-//        orderDao.save(order);
-        save(order);
+        saveOrderAndCreateRequest(order);
     }
 }
