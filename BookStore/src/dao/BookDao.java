@@ -1,6 +1,10 @@
 package dao;
 
 import model.Book;
+import model.BookStatus;
+import model.Order;
+import model.OrderStatus;
+
 import java.util.List;
 
 public interface BookDao {
@@ -14,4 +18,6 @@ public interface BookDao {
     void delete (int id);
 
     Book update(Book book);
+
+    void changeStatusBook(Book book, BookStatus bookStatus);
 }

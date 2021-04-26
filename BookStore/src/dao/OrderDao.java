@@ -1,6 +1,8 @@
 package dao;
 
 import model.Order;
+import model.OrderStatus;
+
 import java.util.List;
 
 public interface OrderDao {
@@ -15,5 +17,7 @@ public interface OrderDao {
 
     Order findById(int id);
 
-    void changeStatusOrder(int id);
+    void changeOrderStatus(int id);
+
+    void changeStatusOrder(Order order, OrderStatus orderStatus);
 }

@@ -2,22 +2,25 @@ package dao.impl;
 
 import dao.OrderDao;
 import model.Book;
+import model.BookStatus;
 import model.Order;
+import model.OrderStatus;
+import sun.swing.BakedArrayList;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static model.OrderStatus.*;
 
 public class OrderDaoImpl implements OrderDao {
     private List<Book> books = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
     private Integer id = 0;
-    private Object Book;
 
     public OrderDaoImpl() {
-        init();
     }
-
-    private void init(){
-        }
 
     private int idGenerator() {
         id = id + 1;
@@ -25,10 +28,10 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order save(Order entity) {
-        entity.setId(idGenerator());
-        orders.add(entity);
-        return entity;
+    public Order save(Order order) {
+        order.setId(idGenerator());
+        orders.add(order);
+        return order;
     }
 
     @Override
@@ -49,10 +52,8 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order update(Order entiity) {
-//        Order order = orders.get(idGenerator());
-//       // orders.setPriceBooks(entiity.getPriceBooks());
-//        return order;
-        return null;
+        Order order = orders.get(idGenerator());
+        return order;
     }
 
     @Override
@@ -67,6 +68,12 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void changeStatusOrder(int id) {
+    public void changeOrderStatus(int id) {
     }
+
+    public void changeStatusOrder(Order order, OrderStatus orderStatus) {
+        order.setOrderStatus(orderStatus);
+        save(order);
+    }
+
 }

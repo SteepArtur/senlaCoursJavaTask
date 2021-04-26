@@ -8,6 +8,11 @@ import model.OrderStatus;
 import service.BookService;
 import service.OrderService;
 import service.RequestService;
+import sun.util.resources.cldr.lv.LocaleNames_lv;
+import util.comparators.OrderComparatorDateComplete;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order saveOrderAndCreateRequest(Order order) {
         Boolean canCreateOrder = checkOrderBooks(order.getBooks());
-        if (!canCreateOrder){
+        if (!canCreateOrder) {
             System.out.println("Can not create order");
             System.out.println("Created request for new Books");
             return null;
@@ -28,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
         System.out.println("Save order: " + order);
         order.setOrderStatus(OrderStatus.NEW);
+        order.setStartTime(LocalDateTime.now());
         return orderDao.save(order);
     }
 
@@ -69,6 +75,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> sortOrderDate(List<Order> orders) {
+        orders.sort(new OrderComparatorDateComplete());
+        return new ArrayList<>(orders);
+    }
+
+    @Override
     public void changeStatusOrder(Order order, OrderStatus orderStatus) {
         order.setOrderStatus(orderStatus);
     }
@@ -79,4 +91,5 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(orderStatus);
         saveOrderAndCreateRequest(order);
     }
+
 }

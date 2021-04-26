@@ -3,6 +3,7 @@ package service;
 import model.Order;
 import model.OrderStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderService {
@@ -15,7 +16,10 @@ public interface OrderService {
 
     Order findById(int i);
 
-    void changeStatusOrderById(Integer orderId, OrderStatus orderStatuss);
+    List<Order> sortOrderDate(List<Order> orders);
+
+    void changeStatusOrderById(Integer orderId, OrderStatus orderStatus);
 
     void changeStatusOrder(Order order, OrderStatus orderStatus);
+
 }
