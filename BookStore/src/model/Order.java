@@ -1,25 +1,34 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class Order {
     private int id;
     private OrderStatus orderStatus;
     private List<Book> books;
+    private double totalCost;//totalCost
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     public Order() {
     }
 
-    public Order(int id, OrderStatus orderStatus, List<Book> books, LocalDateTime startTime, LocalDateTime endTime) {
+    public Order(int id, OrderStatus orderStatus, List<Book> books, double totalCost, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
         this.orderStatus = orderStatus;
         this.books = books;
+        this.totalCost = totalCost;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
     public int getId() {
@@ -69,6 +78,7 @@ public class Order {
                 "id=" + id +
                 ", orderStatus=" + orderStatus +
                 ", books=" + books +
+                ", totalCost=" + totalCost +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';

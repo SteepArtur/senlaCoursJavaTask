@@ -22,17 +22,31 @@ public class ApplicationBookStore {
         RequestService requestService = new RequestServiceImpl();
         ClientService clientService = new ClientServiceImpl();
 
-        List<Order> orders = createOrders(bookService, orderService);
-//        deleteOrder(orderService);
-//        orderSum(orderService);
-//        changeOrderStatus(orderService);
-//        createOrderWithRequest(orderService);
-//        createRequestForBook(requestService);
-//        sortBookName(bookService.findAll(), bookService);
-//        sortBookByDate(bookService.findAll(), bookService);
-//        sortBookByPrice(bookService.findAll(),bookService);
-//        sortInBook(bookService.findAll(),bookService);
-          sortOrderByDate(orderService, orders);
+       List<Order> orders = createOrders(bookService, orderService);
+        deleteOrder(orderService);
+        orderSum(orderService);
+        changeOrderStatus(orderService);
+        createOrderWithRequest(orderService);
+        createRequestForBook(requestService);
+        sortBookName(bookService.findAll(), bookService);
+        sortBookByDate(bookService.findAll(), bookService);
+        sortBookByPrice(bookService.findAll(),bookService);
+        sortInBook(bookService.findAll(),bookService);
+        sortOrderByDate(orderService, orders);
+        sortOrderByPrice(orderService, orders);
+        sortOrderByStatus(orders,orderService);
+    }
+
+    private static void sortOrderByStatus(List<Order> orders, OrderService orderService) {
+        System.out.println("\nComplete sortingByOrderStatus: ");
+        List<Order> orderSorted = orderService.sortOrderByStatus(orders);
+        orderSorted.forEach(System.out::println);
+    }
+
+    private static void sortOrderByPrice(OrderService orderService, List<Order> orders) {
+        System.out.println("\nComplete sortingByPrice: ");
+        List<Order> ordersSorted = orderService.sortOrderByPrice(orders);
+        ordersSorted.forEach(System.out::println);
     }
 
     private static void sortOrderByDate(OrderService orderService, List<Order> orders) {
@@ -95,12 +109,13 @@ public class ApplicationBookStore {
         Order order = orderService.findById(1);
         List<Book> books = order.getBooks();
         books.add(1, books.get(1));
-
+        
         double sum = 0;
         for (Book book : books) {
             sum += sum + book.getPrice();
         }
         System.out.println(order + " \n Сумма заказа " + sum);
+
     }
 
     private static List<Order> createOrders(BookService bookService, OrderService orderService) {
@@ -109,15 +124,19 @@ public class ApplicationBookStore {
         List<Book> booksForOrder = new ArrayList<>();
         List<Book> books = bookService.findAll();
         booksForOrder.add(books.get(1));
-        booksForOrder.add(books.get(3));
 
         Order order1 = new Order();
         order1.setBooks(booksForOrder);
         orderService.saveOrderAndCreateRequest(order1);
         orders.add(order1);
 
+        System.out.println("\n");
+
+        List<Book> booksForOrder0 = new ArrayList<>();
+        booksForOrder0.add(books.get(3));
+
         Order order2 = new Order();
-        order2.setBooks(booksForOrder);
+        order2.setBooks(booksForOrder0);
         orderService.saveOrderAndCreateRequest(order2);
         orders.add(order2);
 
@@ -181,27 +200,33 @@ public class ApplicationBookStore {
         allOrders.forEach(System.out::println);
 
         Order order = allOrders.get(0);
-        orderService.changeStatusOrder(order, OrderStatus.NEW);
-        orderService.changeStatusOrderById(1, OrderStatus.NEW);
+        orderService.changeStatusOrder(order, OrderStatus.COMPLETE);
+        orderService.changeStatusOrderById(1, OrderStatus.COMPLETE);
+        allOrders.add(order);
 
         Order order1 = allOrders.get(1);
         orderService.changeStatusOrder(order1, OrderStatus.COMPLETE);
         orderService.changeStatusOrderById(2, OrderStatus.COMPLETE);
+        allOrders.add(order1);
 
         Order order2 = allOrders.get(2);
         orderService.changeStatusOrder(order2, OrderStatus.DELETE);
+        orderService.changeStatusOrderById(3, OrderStatus.DELETE);
+        allOrders.add(order2);
 
         Order order3 = allOrders.get(3);
         orderService.changeStatusOrder(order3, OrderStatus.NEW);
-        orderService.changeStatusOrderById(3, OrderStatus.NEW);
+        orderService.changeStatusOrderById(4, OrderStatus.NEW);
+        allOrders.add(order3);
 
         Order order4 = allOrders.get(4);
         orderService.changeStatusOrder(order4, OrderStatus.NEW);
-        orderService.changeStatusOrderById(4, OrderStatus.NEW);
+        orderService.changeStatusOrderById(5, OrderStatus.NEW);
+        allOrders.add(order4);
 
         Order order5 = allOrders.get(5);
-        orderService.changeStatusOrder(order5, OrderStatus.NEW);
-        orderService.changeStatusOrderById(5, OrderStatus.NEW);
-
+        orderService.changeStatusOrder(order5, OrderStatus.COMPLETE);
+        orderService.changeStatusOrderById(6, OrderStatus.COMPLETE);
+        allOrders.add(order5);
     }
 }

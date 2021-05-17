@@ -8,10 +8,10 @@ import model.OrderStatus;
 import service.BookService;
 import service.OrderService;
 import service.RequestService;
-import sun.util.resources.cldr.lv.LocaleNames_lv;
+import util.comparators.OrderComparatorByPrice;
+import util.comparators.OrderComparatorByStatus;
 import util.comparators.OrderComparatorDateComplete;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
         System.out.println("Save order: " + order);
-        order.setOrderStatus(OrderStatus.NEW);
         order.setStartTime(LocalDateTime.now());
+        order.setEndTime(LocalDateTime.now());
+        double sum = 0;
+        for (Book book: order.getBooks()) {
+            sum = sum + book.getPrice();
+        }
+        order.setTotalCost(sum);
         return orderDao.save(order);
     }
 
@@ -84,6 +89,19 @@ public class OrderServiceImpl implements OrderService {
     public void changeStatusOrder(Order order, OrderStatus orderStatus) {
         order.setOrderStatus(orderStatus);
     }
+
+    @Override
+    public List<Order> sortOrderByPrice(List<Order> orders) {
+        orders.sort(new OrderComparatorByPrice());
+        return new ArrayList<>(orders);
+    }
+
+    @Override
+    public List<Order> sortOrderByStatus(List<Order> orders) {
+        orders.sort(new OrderComparatorByStatus());
+        return new ArrayList<>(orders);
+    }
+
 
     @Override
     public void changeStatusOrderById(Integer id, OrderStatus orderStatus) {

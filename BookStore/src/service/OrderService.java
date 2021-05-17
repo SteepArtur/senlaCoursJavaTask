@@ -1,5 +1,6 @@
 package service;
 
+import model.Book;
 import model.Order;
 import model.OrderStatus;
 
@@ -22,4 +23,7 @@ public interface OrderService {
 
     void changeStatusOrder(Order order, OrderStatus orderStatus);
 
+    List<Order> sortOrderByPrice(List<Order> orders);
+
+    List<Order> sortOrderByStatus(List<Order> orders);
 }
