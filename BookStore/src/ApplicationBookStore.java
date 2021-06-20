@@ -1,6 +1,7 @@
 import model.Book;
 import model.Order;
 import model.OrderStatus;
+import model.Request;
 import service.BookService;
 import service.ClientService;
 import service.OrderService;
@@ -35,6 +36,13 @@ public class ApplicationBookStore {
         sortOrderByDate(orderService, orders);
         sortOrderByPrice(orderService, orders);
         sortOrderByStatus(orders,orderService);
+        sortRequestByBooks(bookService ,requestService);
+    }
+
+    private static void sortRequestByBooks(BookService bookService, RequestService requestService) {
+        List<Request> sortedRequest = new ArrayList<>();
+        List<Book> requestBookSorted = new ArrayList<>();
+        List<Book> books = bookService.findAll();
     }
 
     private static void sortOrderByStatus(List<Order> orders, OrderService orderService) {

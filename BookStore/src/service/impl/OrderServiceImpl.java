@@ -32,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         System.out.println("Save order: " + order);
+        order.setOrderStatus(OrderStatus.NEW);
         order.setStartTime(LocalDateTime.now());
         order.setEndTime(LocalDateTime.now());
         double sum = 0;
